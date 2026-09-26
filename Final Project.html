@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeany Rose A. Calibuyot | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #7209b7;
+            --accent: #4cc9f0;
+            --light: #f8f9ff;
+            --dark: #2b2d42;
+            --shadow: 0 8px 24px rgba(67, 97, 238, 0.15);
+            --shadow-hover: 0 12px 32px rgba(67, 97, 238, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6e9ff 100%);
+            color: var(--dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .photo-container {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-photo {
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.3), var(--shadow);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .photo-container:hover .profile-photo {
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.5), 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        .photo-note {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-header {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox-img {
+            max-width: 85%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        .lightbox-text {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin-left: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .skill {
+            background: linear-gradient(135deg, #eef2ff, #e6f7ff);
+            color: var(--primary);
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .skill:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .project {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            transition: 0.2s;
+        }
+
+        .project:hover {
+            background: #eef2ff;
+        }
+
+        .project h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.9rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .done {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        ul {
+            margin: 1rem 0 0 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+        }
+
+        #greeting {
+            margin-top: 1.2rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #eef2ff, #f3e8ff);
+            border-radius: 12px;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .goal {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .goal:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            font-size: 1.3rem;
+            margin-right: 1rem;
+        }
+
+        .done-text {
+            color: #28a745;
+        }
+
+        .pending-text {
+            color: #6c757d;
+        }
+
+        .contact-links p {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.7rem; }
+            .card { padding: 1.5rem; }
+            .profile-photo { width: 130px; height: 130px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="lightbox" class="lightbox">
+    <img src="" alt="Formal Profile Photo" id="lightbox-img" class="lightbox-img">
+    <p class="lightbox-text">Click anywhere to close</p>
+</div>
+
+<header>
+    <div class="header-content">
+        <div class="photo-container" id="profile-trigger">
+            <img src="formal-photo.jpg" alt="Jeany Rose A. Calibuyot — Formal Profile" class="profile-photo" id="profile-img">
+        </div>
+        <p class="photo-note">👆 Click photo to view</p>
+        <h1>Jeany Rose A. Calibuyot</h1>
+        <p class="tagline">BSIT Student | Section: OLCA211E054</p>
+        <p class="contact-header">📍 Philippines | 📧 calibuyotjeanyrose@gmail.com</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>✨ About Me</h2>
+        <p style="font-size: 1.05rem;">
+            Hello! I'm <strong>Jeany Rose</strong>, a dedicated Bachelor of Science in Information Technology student. 
+            I am passionate about building <em>practical, user-friendly systems</em> that make a real difference — especially 
+            for our local communities. I believe technology should be accessible, transparent, and helpful to everyone.
+        </p>
+        <p style="margin-top: 0.8rem;">
+            My goal is to turn ideas into working solutions that simplify daily tasks and serve the people around me. 💙
+        </p>
+        <div id="greeting"></div>
+    </div>
+
+    <div class="card">
+        <h2>💻 My Skills</h2>
+        <p>Technologies I use and continuously improve:</p>
+        <div class="skills-grid">
+            <div class="skill">HTML5</div>
+            <div class="skill">CSS3</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Python</div>
+            <div class="skill">MySQL</div>
+            <div class="skill">GitHub</div>
+            <div class="skill">VS Code</div>
+            <div class="skill">Web Design</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📂 My Projects</h2>
+
+        <div class="project">
+            <h3>
+                Barangay Record & Transparency System
+                <span class="status progress">In Progress</span>
+            </h3>
+            <p><strong>Capstone Project</strong> — serving our community</p>
+            <ul>
+                <li>✅ Digitalize resident information & records</li>
+                <li>✅ Blotter & incident recording module</li>
+                <li>✅ Public funds transparency dashboard — residents see exactly where funds go</li>
+                <li><strong>Tools:</strong> HTML, CSS, JavaScript, Python, MySQL</li>
+                <li><strong>My Role:</strong> Full-stack development & database design</li>
+                <li><strong>Learned:</strong> Building systems that solve real community needs; organizing data properly</li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <h3>
+                Student Information System (Python - OOP)
+                <span class="status done">Completed</span>
+            </h3>
+            <ul>
+                <li>Created <code>Student</code> class with ID, Name, Course, Year Level</li>
+                <li>Generated multiple student objects — all BSIT course</li>
+                <li>Used Mobile Legends hero names as sample data</li>
+                <li>Displayed formatted records neatly</li>
+                <li><strong>Tools:</strong> Python — Classes, constructors, objects</li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <h3>
+                This Portfolio Website
+                <span class="status progress">Ongoing</span>
+            </h3>
+            <ul>
+                <li>Responsive design — works beautifully on phones & computers</li>
+                <li>Dynamic greeting that changes with the time of day</li>
+                <li>Built with clean, modern design principles</li>
+                <li><strong>Tools:</strong> HTML5, CSS3, JavaScript</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🎓 Education</h2>
+        <p style="font-size: 1.1rem;"><strong>Bachelor of Science in Information Technology</strong></p>
+        <p>ICCT Colleges</p>
+        <p>Section: OLCA211E054</p>
+        <p style="margin-top: 0.5rem; color: #6b7280;">Focus: Web Systems, Programming, Database Management</p>
+    </div>
+
+    <div class="card">
+        <h2>🏆 Achievements</h2>
+        <ul>
+            <li>✅ Python Programming — All Activities & Quizzes Completed</li>
+            <li>✅ Web Systems — Chapters 1–2 Pre & Post Tests Completed</li>
+            <li>✅ Arts Appreciation — Prelim Examination Completed</li>
+            <li>✅ Algebra & Exponents — Practice Sets & Problem Solving Completed</li>
+            <li>✅ HTML Structure & Semantics — All Assessments Completed</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🎯 My Goals</h2>
+        <div class="goal">
+            <span class="icon">✅</span>
+            <span class="done-text">Build working systems that serve our community</span>
+        </div>
+        <div class="goal">
+            <span class="icon">✅</span>
+            <span class="done-text">Start capstone with barangay transparency features</span>
+        </div>
+        <div class="goal">
+            <span class="icon">⏳</span>
+            <span class="pending-text">Complete Barangay System — Final Testing & Deployment</span>
+        </div>
+        <div class="goal">
+            <span class="icon">⏳</span>
+            <span class="pending-text">OJT / Internship — Apply skills in a real workplace</span>
+        </div>
+        <div class="goal">
+            <span class="icon">🎓</span>
+            <span class="pending-text">Graduate as a professional IT Developer</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📬 Get In Touch</h2>
+        <div class="contact-links">
+            <p>📧 <a href="mailto:calibuyotjeanyrose@gmail.com">calibuyotjeanyrose@gmail.com</a></p>
+            <p>💻 <a href="#">GitHub — Add your link here</a></p>
+            <p>📍 Philippines</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Jeany Rose A. Calibuyot — Crafted with 💜<br>
+    Built using HTML, CSS & JavaScript
+</footer>
+
+<script>
+    const greetingEl = document.getElementById('greeting');
+    const hour = new Date().getHours();
+    greetingText = hour < 12 ? "🌅 Good morning! May your day be productive and bright!"
+                 : hour < 18 ? "☀️ Good afternoon! Keep pushing forward — you're doing great!"
+                 : "🌙 Good evening! Rest well and dream big!";
+    greetingEl.textContent = greetingText;
+
+    const trigger = document.getElementById('profile-trigger');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const profileImg = document.getElementById('profile-img');
+
+    trigger.addEventListener('click', () => {
+        lightboxImg.src = profileImg.src;
+        lightbox.style.display = 'flex';
+    });
+
+    lightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
